@@ -13,6 +13,8 @@ public class Polynomial {
     }
 
     private String operation;
+    private final HashMap<Integer, Integer> coefficientMap1;
+    private final HashMap<Integer, Integer> coefficientMap2;
 
     public HashMap<Integer, Integer> getCoefficientMap1() {
         return coefficientMap1;
@@ -21,10 +23,6 @@ public class Polynomial {
     public HashMap<Integer, Integer> getCoefficientMap2() {
         return coefficientMap2;
     }
-
-    private final HashMap<Integer, Integer> coefficientMap1;
-    private final HashMap<Integer, Integer> coefficientMap2;
-
     public String getPoly1() {
         return poly1;
     }
@@ -71,10 +69,10 @@ public class Polynomial {
             } if (character == 'x' || character == 'X') {
                 degree = 0;
                 isDegree = true;
-            } if (character == '+' || character == '-') {
                 if (coefficient == 0) {
                     coefficient = 1;
                 }
+            } if (character == '+' || character == '-') {
                 if(isDegree && degree == 0)
                     degree = 1;
                 addCoefficient(degree,coefficient * sign, coefficientMap);
@@ -117,10 +115,10 @@ public class Polynomial {
             case "Subtraction" -> finalPolynomial = OperationClass.subtractionOfPolynomials(this);
             case "Multiplication" -> finalPolynomial = OperationClass.multiplicationOfPolynomials(this);
             case "Division" -> finalPolynomial = OperationClass.divisionOfPolynomials(this);
-            case "Differentiation" -> OperationClass.differentiationOfPolynomial(this);
-            case "Integration" -> OperationClass.integrationOfPolynomial(this);
+            case "Differentiation" -> finalPolynomial = OperationClass.differentiationOfPolynomial(this);
+            case "Integration" -> finalPolynomial = OperationClass.integrationOfPolynomial(this);
             default -> System.out.println("This did not work as expected");
-        };
+        }
         return finalPolynomial;
     }
 }

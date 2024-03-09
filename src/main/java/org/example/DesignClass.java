@@ -19,8 +19,8 @@ public class DesignClass {
         operationChooser.addItem("Subtraction");
         operationChooser.addItem("Multiplication");
         operationChooser.addItem("Division");
-        operationChooser.addItem("Integration");
         operationChooser.addItem("Differentiation");
+        operationChooser.addItem("Integration");
         operationChooser.setBackground(Color.WHITE);
         operationChooser.setForeground(Color.BLACK);
         operationChooser.setFont(new Font("Consolas", Font.PLAIN, 14));
