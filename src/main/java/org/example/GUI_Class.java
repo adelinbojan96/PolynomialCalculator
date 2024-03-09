@@ -3,6 +3,7 @@ package org.example;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Objects;
 
 public class GUI_Class extends JDialog {
     private JPanel mainPanel;
@@ -22,6 +23,11 @@ public class GUI_Class extends JDialog {
         design.customizeButton(makeTheOperationButton);
         design.customizeChooser(operationChooser);
         operationClass.displaySecondPolynomial(operationChooser, secondPolynomialText, secondText);
+        makeTheOperationButton.addActionListener(e -> {
+            //perform solving
+            Polynomial poly = new Polynomial(firstPolynomialText.getText(), secondPolynomialText.getText(), Objects.requireNonNull(operationChooser.getSelectedItem()).toString());
+            finalText.setText(poly.solveOperationForPolynomial());
+        });
         setModal(true);
         setVisible(true);
     }

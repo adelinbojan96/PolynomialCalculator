@@ -1,20 +1,46 @@
 package org.example;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Polynomial {
     private String poly1;
     private String poly2;
+
+    public String getOperation() {
+        return operation;
+    }
+
+    private String operation;
+
+    public HashMap<Integer, Integer> getCoefficientMap1() {
+        return coefficientMap1;
+    }
+
+    public HashMap<Integer, Integer> getCoefficientMap2() {
+        return coefficientMap2;
+    }
+
     private final HashMap<Integer, Integer> coefficientMap1;
     private final HashMap<Integer, Integer> coefficientMap2;
-    public Polynomial(String poly1, String poly2) {
+
+    public String getPoly1() {
+        return poly1;
+    }
+
+    public String getPoly2() {
+        return poly2;
+    }
+
+    public Polynomial(String poly1, String poly2, String operation) {
         this.poly1 = poly1;
         this.poly2 = poly2;
         coefficientMap1 = new HashMap<>();
         coefficientMap2 = new HashMap<>();
+        this.operation = operation;
     }
-    public void addCoefficient(int degree, int coefficient, HashMap<Integer, Integer> coefficientMap) {
+    private void addCoefficient(int degree, int coefficient, HashMap<Integer, Integer> coefficientMap) {
         coefficientMap.put(degree, coefficient);
     }
     private void storeInHashMaps(String poly, HashMap<Integer, Integer> coefficientMap) {
@@ -23,8 +49,8 @@ public class Polynomial {
         int coefficient = 0;
         boolean isDegree = false;
         int sign = 1; // -1 if negative or 1 if positive
-        ArrayList<Integer> degrees = new ArrayList<>();
-        ArrayList<Integer> coefficients = new ArrayList<>();
+        //ArrayList<Integer> degrees = new ArrayList<>();
+        //ArrayList<Integer> coefficients = new ArrayList<>();
         boolean skip = false;
         if (!poly.isEmpty() && poly.charAt(0) == '-') {
             sign = -1;
@@ -54,8 +80,8 @@ public class Polynomial {
                 addCoefficient(degree,coefficient * sign, coefficientMap);
                 prevDegree = degree;
                 isDegree = false;
-                degrees.add(degree);
-                coefficients.add(coefficient * sign);
+                //degrees.add(degree);
+                //coefficients.add(coefficient * sign);
                 coefficient = 0;
                 sign = (character == '+') ? 1 : -1;
             }
@@ -65,9 +91,7 @@ public class Polynomial {
                 degree = 1;
             if(prevDegree == degree)
                 degree = 0;
-            addCoefficient(degree, coefficient, coefficientMap);
-            degrees.add(degree);
-            coefficients.add(coefficient * sign);
+            addCoefficient(degree, coefficient * sign, coefficientMap);
         }
     /*  TESTING STUFF
         for (Integer value : degrees) {
@@ -78,9 +102,25 @@ public class Polynomial {
         }
      */
     }
-    public void readPolynomials()
+    protected void readPolynomials()
     {
         storeInHashMaps(this.poly1, coefficientMap1);
         storeInHashMaps(this.poly2, coefficientMap2);
+    }
+
+    public String solveOperationForPolynomial() {
+        String finalPolynomial = "This does not work yet.";
+        readPolynomials();
+        System.out.println(poly1);
+        switch (operation) {
+            case "Addition" -> finalPolynomial = OperationClass.additionOfPolynomials(this);
+            case "Subtraction" -> finalPolynomial = OperationClass.subtractionOfPolynomials(this);
+            case "Multiplication" -> OperationClass.multiplicationOfPolynomials(this);
+            case "Division" -> OperationClass.divisionOfPolynomials(this);
+            case "Differentiation" -> OperationClass.differentiationOfPolynomial(this);
+            case "Integration" -> OperationClass.integrationOfPolynomial(this);
+            default -> System.out.println("This did not work as expected");
+        };
+        return finalPolynomial;
     }
 }
