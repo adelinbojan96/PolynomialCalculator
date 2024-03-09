@@ -2,13 +2,9 @@ package org.example;
 
 import javax.swing.*;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
 
 public class OperationClass {
-    //here we are going to implement the operations
     public void displaySecondPolynomial(JComboBox operationChooser, JTextArea secondPolynomialText, JLabel secondText)
     {
         operationChooser.addActionListener(e -> {
@@ -23,59 +19,7 @@ public class OperationClass {
             }
         });
     }
-    private static HashMap<Integer, Integer> firstMap = new HashMap<>();
-    private static HashMap<Integer, Integer> secondMap = new HashMap<>();
-    private static String displayFinalPolynomial(HashMap<Integer, Integer> finalMap)
-    {
-        StringBuilder finalText = new StringBuilder();
-        int sign;
-        for (HashMap.Entry<Integer, Integer> entry : finalMap.entrySet())
-        {
-            int degree = entry.getKey();
-            int coefficient = entry.getValue();
-            sign = Integer.compare(coefficient, 0);
-            if(coefficient != 0 && coefficient != 1 && coefficient != -1)
-            {
-                if(degree >= 2)
-                    finalText.insert(0,coefficient + "X^" + degree);
-                else if(degree == 1)
-                    finalText.insert(0, coefficient + "X");
-                else
-                    finalText.insert(0, coefficient);
-            }
-            else if(coefficient == 1)
-            {
-                if(degree >= 2)
-                    finalText.insert(0,"X^" + degree);
-                else if(degree == 1)
-                    finalText.insert(0, "X");
-                else
-                    finalText.insert(0, coefficient);
-            }
-            else if(coefficient == -1)
-            {
-                if(degree >= 2)
-                    finalText.insert(0,"-X^" + degree);
-                else if(degree == 1)
-                    finalText.insert(0, "-X");
-                else
-                    finalText.insert(0, coefficient);
-            }
-            if(sign == 1)
-                finalText.insert(0, " +");
-            else if(sign == -1)
-                finalText.insert(0, " ");
-        }
-        if(finalText.isEmpty())
-            return "0";
-        else if(finalText.charAt(0) == ' ' && finalText.charAt(1) == '+')
-            return finalText.substring(2, finalText.length());
-        else if(finalText.charAt(0) == ' ')
-            return finalText.substring(1, finalText.length());
-        else
-            return finalText.toString();
-    }
-    private static String displayFinalPolynomial2(HashMap<Integer, Double> finalMap)
+    private static String displayFinalPolynomial(HashMap<Integer, Double> finalMap)
     {
         StringBuilder finalText = new StringBuilder();
         DecimalFormat df = new DecimalFormat("0.##");
@@ -128,86 +72,77 @@ public class OperationClass {
     }
     public static String additionOfPolynomials(Polynomial poly) {
         //additionForPolynomials
-        firstMap = poly.getCoefficientMap1();
-        secondMap = poly.getCoefficientMap2();
-        HashMap <Integer, Integer> resultingMap = new HashMap<>();
-        System.out.println("First one");
-        for(HashMap.Entry entry : firstMap.entrySet())
-        {
-            System.out.println(entry.getKey() + " " + entry.getValue());
-        }
-        System.out.println("Second one");
-        for(HashMap.Entry entry : secondMap.entrySet())
-        {
-            System.out.println(entry.getKey() + " " + entry.getValue());
-        }
-        for (HashMap.Entry<Integer, Integer> entry : firstMap.entrySet())
+        HashMap<Integer, Double> firstMap = poly.getCoefficientMap1();
+        HashMap<Integer, Double> secondMap = poly.getCoefficientMap2();
+        HashMap <Integer, Double> resultingMap = new HashMap<>();
+
+        for (HashMap.Entry<Integer, Double> entry : firstMap.entrySet())
         {
             int degree = entry.getKey();
-            int coefficient1 = entry.getValue();
+            double coefficient1 = entry.getValue();
             if (secondMap.containsKey(degree))
             {
-                int coefficient2 = secondMap.get(degree);
-                int sumCoefficients = coefficient1 + coefficient2;
-                resultingMap.put(degree, sumCoefficients);
+                double coefficient2 = secondMap.get(degree);
+                double sumCoefficients = coefficient1 + coefficient2;
+                resultingMap.put(degree, (double) sumCoefficients);
                 secondMap.remove(degree);
             }
             else
-                resultingMap.put(degree, coefficient1);
+                resultingMap.put(degree, (double) coefficient1);
         }
-        for(HashMap.Entry<Integer, Integer> entry : secondMap.entrySet()) //what remains left in the secondMap
+        for(HashMap.Entry<Integer, Double> entry : secondMap.entrySet()) //what remains left in the secondMap
         {
             int degree = entry.getKey();
-            int coefficient = entry.getValue();
-            resultingMap.put(degree, coefficient);
+            double coefficient = entry.getValue();
+            resultingMap.put(degree, (double) coefficient);
         }
         return displayFinalPolynomial(resultingMap);
     }
         public static String subtractionOfPolynomials (Polynomial poly)
         {
-            HashMap<Integer, Integer> firstMap = poly.getCoefficientMap1();
-            HashMap<Integer, Integer> secondMap = poly.getCoefficientMap2();
-            HashMap <Integer, Integer> resultingMap = new HashMap<>();
-            for (HashMap.Entry<Integer, Integer> entry : firstMap.entrySet()) {
+            HashMap<Integer, Double> firstMap = poly.getCoefficientMap1();
+            HashMap<Integer, Double> secondMap = poly.getCoefficientMap2();
+            HashMap <Integer, Double> resultingMap = new HashMap<>();
+            for (HashMap.Entry<Integer, Double> entry : firstMap.entrySet()) {
                 int degree = entry.getKey();
-                int coefficient1 = entry.getValue();
+                double coefficient1 = entry.getValue();
                 if (secondMap.containsKey(degree)) {
-                    int coefficient2 = secondMap.get(degree);
-                    int sumCoefficients = coefficient1 + (-1) * coefficient2;
-                    resultingMap.put(degree, sumCoefficients);
+                    double coefficient2 = secondMap.get(degree);
+                    double sumCoefficients = coefficient1 + (-1) * coefficient2;
+                    resultingMap.put(degree, (double) sumCoefficients);
                     secondMap.remove(degree);
                 } else
-                    resultingMap.put(degree, coefficient1);
+                    resultingMap.put(degree, (double) coefficient1);
             }
-            for(HashMap.Entry<Integer, Integer> entry : secondMap.entrySet())
+            for(HashMap.Entry<Integer, Double> entry : secondMap.entrySet())
             {
                 int degree = entry.getKey();
-                int coefficient = -entry.getValue();
-                resultingMap.put(degree, coefficient);
+                double coefficient = -entry.getValue();
+                resultingMap.put(degree, (double) coefficient);
             }
             return displayFinalPolynomial(resultingMap);
         }
         public static String multiplicationOfPolynomials (Polynomial poly)
         {
-            HashMap<Integer, Integer> firstMap = poly.getCoefficientMap1();
-            HashMap<Integer, Integer> secondMap = poly.getCoefficientMap2();
-            HashMap <Integer, Integer> resultingMap = new HashMap<>();
-            for(HashMap.Entry<Integer, Integer> entry1 : firstMap.entrySet())
+            HashMap<Integer, Double> firstMap = poly.getCoefficientMap1();
+            HashMap<Integer, Double> secondMap = poly.getCoefficientMap2();
+            HashMap <Integer, Double> resultingMap = new HashMap<>();
+            for(HashMap.Entry<Integer, Double> entry1 : firstMap.entrySet())
             {
                 int degree1 = entry1.getKey();
-                int coefficient1 = entry1.getValue();
-                for(HashMap.Entry<Integer, Integer> entry2 : secondMap.entrySet())
+                double coefficient1 = entry1.getValue();
+                for(HashMap.Entry<Integer, Double> entry2 : secondMap.entrySet())
                 {
                     int degree2 = entry2.getKey();
-                    int coefficient2 = entry2.getValue();
+                    double coefficient2 = entry2.getValue();
                     int finalDegree = degree1 + degree2;
-                    int finalCoefficient = coefficient1 * coefficient2;
-                    resultingMap.put(finalDegree, resultingMap.getOrDefault(finalDegree, 0) + finalCoefficient);
+                    double finalCoefficient = coefficient1 * coefficient2;
+                    resultingMap.put(finalDegree, resultingMap.getOrDefault(finalDegree, (double) 0) + finalCoefficient);
                 }
             }
             return displayFinalPolynomial(resultingMap);
         }
-        private static int degreeOf(HashMap<Integer, Integer> map) {
+        private static int degreeOf(HashMap<Integer, Double> map) {
             int maxDegree = -1;
             for (int degree : map.keySet()) {
                 if (degree > maxDegree) {
@@ -218,27 +153,26 @@ public class OperationClass {
         }
         public static String divisionOfPolynomials (Polynomial poly)
         {
-            HashMap<Integer, Integer> firstMap = poly.getCoefficientMap1();
-            HashMap<Integer, Integer> secondMap = poly.getCoefficientMap2();
-            HashMap <Integer, Integer> resultingMap = new HashMap<>();
-            HashMap <Integer, Integer> remainderMap = firstMap;
+            HashMap<Integer, Double> remainderMap = poly.getCoefficientMap1();
+            HashMap<Integer, Double> secondMap = poly.getCoefficientMap2();
+            HashMap <Integer, Double> resultingMap = new HashMap<>();
             int highestPowerRemainder = degreeOf(remainderMap);
             int highestPowerSecond = degreeOf(secondMap);
             while(highestPowerRemainder >= highestPowerSecond)
             {
                 int degree = highestPowerRemainder - highestPowerSecond;
-                int coefficient;
-                System.out.println(highestPowerRemainder + " " + highestPowerSecond + " and " + firstMap.get(highestPowerRemainder) + " " + secondMap.get(highestPowerSecond));
-                if(secondMap.getOrDefault(highestPowerSecond, 0) != 0)
-                    coefficient = firstMap.get(highestPowerRemainder) / secondMap.get(highestPowerSecond);
+                double coefficient;
+                //System.out.println(highestPowerRemainder + " " + highestPowerSecond + " and " + remainderMap.get(highestPowerRemainder) + " " + secondMap.get(highestPowerSecond));
+                if(secondMap.getOrDefault(highestPowerSecond, (double) 0) != 0)
+                    coefficient = remainderMap.get(highestPowerRemainder) / secondMap.get(highestPowerSecond);
                 else
                     coefficient = 0;
                 resultingMap.put(degree, coefficient); //does not matter if coefficient is 0 because upper function solves everything.
 
-                for(HashMap.Entry<Integer, Integer> entry: secondMap.entrySet())
+                for(HashMap.Entry<Integer, Double> entry: secondMap.entrySet())
                 {
                     int newDegree = entry.getKey() + degree;
-                    int newCoefficient = entry.getValue() * coefficient;
+                    double newCoefficient = entry.getValue() * coefficient;
                     if(remainderMap.containsKey(newDegree))
                         remainderMap.put(newDegree, remainderMap.get(newDegree) - newCoefficient);
                     else
@@ -247,15 +181,16 @@ public class OperationClass {
                 remainderMap.remove(highestPowerRemainder);//this action NEEDS to be done
                 highestPowerRemainder = degreeOf(remainderMap);
             }
-            if(remainderMap.isEmpty())
+            String remainderMapString = displayFinalPolynomial(remainderMap);
+            if(remainderMap.isEmpty() || remainderMapString.equals("0"))
                 return displayFinalPolynomial(resultingMap);
-            return displayFinalPolynomial(resultingMap) + " +(" + displayFinalPolynomial(remainderMap) + ")/(" + displayFinalPolynomial(secondMap) + ")";
+            return displayFinalPolynomial(resultingMap) + " +(" + remainderMapString + ")/(" + displayFinalPolynomial(secondMap) + ")";
         }
         public static String differentiationOfPolynomial (Polynomial poly)
         {
-            HashMap<Integer, Integer> firstMap = poly.getCoefficientMap1();
-            HashMap<Integer, Integer> resultingMap = new HashMap<>();
-            for(HashMap.Entry <Integer, Integer> entry : firstMap.entrySet())
+            HashMap<Integer, Double> firstMap = poly.getCoefficientMap1();
+            HashMap<Integer, Double> resultingMap = new HashMap<>();
+            for(HashMap.Entry <Integer, Double> entry : firstMap.entrySet())
             {
                 System.out.println(entry.getKey() +" "+ entry.getValue());
                 if(entry.getKey() != 0)
@@ -264,7 +199,7 @@ public class OperationClass {
                         resultingMap.put(entry.getKey() - 1, entry.getValue() * entry.getKey());
                     }
                     else if(entry.getKey() > 0) {
-                        resultingMap.put(entry.getKey() - 1, entry.getKey());
+                        resultingMap.put(entry.getKey() - 1, Double.valueOf(entry.getKey()));
                     }
                 }
             }
@@ -272,14 +207,13 @@ public class OperationClass {
         }
         public static String integrationOfPolynomial (Polynomial poly)
         {
-            HashMap<Integer, Integer> firstMap = poly.getCoefficientMap1();
+            HashMap<Integer, Double> firstMap = poly.getCoefficientMap1();
             HashMap<Integer, Double> resultingMap = new HashMap<>();
-            boolean constant = false;
-            for(HashMap.Entry <Integer, Integer> entry : firstMap.entrySet())
+            for(HashMap.Entry <Integer, Double> entry : firstMap.entrySet())
             {
                 if(entry.getValue() != 0)
-                    resultingMap.put(entry.getKey() + 1, entry.getValue().doubleValue() / (entry.getKey() + 1));
+                    resultingMap.put(entry.getKey() + 1, entry.getValue() / (entry.getKey() + 1));
             }
-            return displayFinalPolynomial2(resultingMap) + " +C";
+            return displayFinalPolynomial(resultingMap) + " +C";
         }
     }

@@ -16,7 +16,7 @@ public class GUI_Class extends JDialog {
     public GUI_Class()
     {
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        setSize(850, 600);
+        setSize(850, 460);
         setTitle("Enter the polynomials in order to perform certain operations");
         setContentPane(mainPanel);
         DesignClass design = new DesignClass(); OperationClass operationClass = new OperationClass();

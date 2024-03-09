@@ -1,26 +1,19 @@
 package org.example;
-
-import javax.swing.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Polynomial {
-    private String poly1;
-    private String poly2;
+    private final String poly1;
+    private final String poly2;
 
-    public String getOperation() {
-        return operation;
-    }
+    private final String operation;
+    private final HashMap<Integer, Double> coefficientMap1;
+    private final HashMap<Integer, Double> coefficientMap2;
 
-    private String operation;
-    private final HashMap<Integer, Integer> coefficientMap1;
-    private final HashMap<Integer, Integer> coefficientMap2;
-
-    public HashMap<Integer, Integer> getCoefficientMap1() {
+    public HashMap<Integer, Double> getCoefficientMap1() {
         return coefficientMap1;
     }
 
-    public HashMap<Integer, Integer> getCoefficientMap2() {
+    public HashMap<Integer, Double> getCoefficientMap2() {
         return coefficientMap2;
     }
     public String getPoly1() {
@@ -38,10 +31,10 @@ public class Polynomial {
         coefficientMap2 = new HashMap<>();
         this.operation = operation;
     }
-    private void addCoefficient(int degree, int coefficient, HashMap<Integer, Integer> coefficientMap) {
+    private void addCoefficient(int degree, double coefficient, HashMap<Integer, Double> coefficientMap) {
         coefficientMap.put(degree, coefficient);
     }
-    private void storeInHashMaps(String poly, HashMap<Integer, Integer> coefficientMap) {
+    private void storeInHashMaps(String poly, HashMap<Integer, Double> coefficientMap) {
         int degree = 0;
         int prevDegree = 0;
         int coefficient = 0;
@@ -107,7 +100,7 @@ public class Polynomial {
     }
 
     public String solveOperationForPolynomial() {
-        String finalPolynomial = "This does not work yet.";
+        String finalPolynomial = "";
         readPolynomials();
         System.out.println(poly1);
         switch (operation) {
