@@ -127,17 +127,76 @@ public class OperationClass {
                 } else
                     resultingMap.put(degree, coefficient1);
             }
+            for(HashMap.Entry<Integer, Integer> entry : secondMap.entrySet())
+            {
+                int degree = entry.getKey();
+                int coefficient = -entry.getValue();
+                resultingMap.put(degree, coefficient);
+            }
             return displayFinalPolynomial(resultingMap);
         }
-        public static void multiplicationOfPolynomials (Polynomial poly)
+        public static String multiplicationOfPolynomials (Polynomial poly)
         {
             HashMap<Integer, Integer> firstMap = poly.getCoefficientMap1();
             HashMap<Integer, Integer> secondMap = poly.getCoefficientMap2();
+            HashMap <Integer, Integer> resultingMap = new HashMap<>();
+            for(HashMap.Entry<Integer, Integer> entry1 : firstMap.entrySet())
+            {
+                int degree1 = entry1.getKey();
+                int coefficient1 = entry1.getValue();
+                for(HashMap.Entry<Integer, Integer> entry2 : secondMap.entrySet())
+                {
+                    int degree2 = entry2.getKey();
+                    int coefficient2 = entry2.getValue();
+                    int finalDegree = degree1 + degree2;
+                    int finalCoefficient = coefficient1 * coefficient2;
+                    resultingMap.put(finalDegree, resultingMap.getOrDefault(finalDegree, 0) + finalCoefficient);
+                }
+            }
+            return displayFinalPolynomial(resultingMap);
         }
-        public static void divisionOfPolynomials (Polynomial poly)
+        private static int degreeOf(HashMap<Integer, Integer> map) {
+            int maxDegree = -1;
+            for (int degree : map.keySet()) {
+                if (degree > maxDegree) {
+                     maxDegree = degree;
+                 }
+            }
+            return maxDegree;
+        }
+        public static String divisionOfPolynomials (Polynomial poly)
         {
             HashMap<Integer, Integer> firstMap = poly.getCoefficientMap1();
             HashMap<Integer, Integer> secondMap = poly.getCoefficientMap2();
+            HashMap <Integer, Integer> resultingMap = new HashMap<>();
+            HashMap <Integer, Integer> remainderMap = firstMap;
+            int highestPowerRemainder = degreeOf(remainderMap);
+            int highestPowerSecond = degreeOf(secondMap);
+            while(highestPowerRemainder >= highestPowerSecond)
+            {
+                int degree = highestPowerRemainder - highestPowerSecond;
+                int coefficient;
+                if(secondMap.getOrDefault(highestPowerSecond, 0) != 0)
+                    coefficient = firstMap.get(highestPowerRemainder) / secondMap.get(highestPowerSecond);
+                else
+                    coefficient = 0;
+                resultingMap.put(degree, coefficient); //does not matter if coefficient is 0 because upper function solves everything.
+
+                for(HashMap.Entry<Integer, Integer> entry: secondMap.entrySet())
+                {
+                    int newDegree = entry.getKey() + degree;
+                    int newCoefficient = entry.getValue() * coefficient;
+                    if(remainderMap.containsKey(newDegree))
+                        remainderMap.put(newDegree, remainderMap.get(newDegree) - newCoefficient);
+                    else
+                        resultingMap.put(newDegree, - newCoefficient);
+                }
+                remainderMap.remove(highestPowerRemainder);//this action NEEDS to be done
+                highestPowerRemainder = degreeOf(remainderMap);
+            }
+            if(remainderMap.isEmpty())
+                return displayFinalPolynomial(resultingMap);
+            return displayFinalPolynomial(resultingMap) + " +(" + displayFinalPolynomial(remainderMap) + ")/(" + displayFinalPolynomial(secondMap) + ")";
         }
         public static void differentiationOfPolynomial (Polynomial poly)
         {

@@ -115,8 +115,8 @@ public class Polynomial {
         switch (operation) {
             case "Addition" -> finalPolynomial = OperationClass.additionOfPolynomials(this);
             case "Subtraction" -> finalPolynomial = OperationClass.subtractionOfPolynomials(this);
-            case "Multiplication" -> OperationClass.multiplicationOfPolynomials(this);
-            case "Division" -> OperationClass.divisionOfPolynomials(this);
+            case "Multiplication" -> finalPolynomial = OperationClass.multiplicationOfPolynomials(this);
+            case "Division" -> finalPolynomial = OperationClass.divisionOfPolynomials(this);
             case "Differentiation" -> OperationClass.differentiationOfPolynomial(this);
             case "Integration" -> OperationClass.integrationOfPolynomial(this);
             default -> System.out.println("This did not work as expected");
