@@ -84,17 +84,17 @@ public class OperationClass {
             {
                 double coefficient2 = secondMap.get(degree);
                 double sumCoefficients = coefficient1 + coefficient2;
-                resultingMap.put(degree, (double) sumCoefficients);
+                resultingMap.put(degree, sumCoefficients);
                 secondMap.remove(degree);
             }
             else
-                resultingMap.put(degree, (double) coefficient1);
+                resultingMap.put(degree, coefficient1);
         }
         for(HashMap.Entry<Integer, Double> entry : secondMap.entrySet()) //what remains left in the secondMap
         {
             int degree = entry.getKey();
             double coefficient = entry.getValue();
-            resultingMap.put(degree, (double) coefficient);
+            resultingMap.put(degree, coefficient);
         }
         return displayFinalPolynomial(resultingMap);
     }
@@ -109,16 +109,16 @@ public class OperationClass {
                 if (secondMap.containsKey(degree)) {
                     double coefficient2 = secondMap.get(degree);
                     double sumCoefficients = coefficient1 + (-1) * coefficient2;
-                    resultingMap.put(degree, (double) sumCoefficients);
+                    resultingMap.put(degree, sumCoefficients);
                     secondMap.remove(degree);
                 } else
-                    resultingMap.put(degree, (double) coefficient1);
+                    resultingMap.put(degree, coefficient1);
             }
             for(HashMap.Entry<Integer, Double> entry : secondMap.entrySet())
             {
                 int degree = entry.getKey();
                 double coefficient = -entry.getValue();
-                resultingMap.put(degree, (double) coefficient);
+                resultingMap.put(degree, coefficient);
             }
             return displayFinalPolynomial(resultingMap);
         }
@@ -155,6 +155,8 @@ public class OperationClass {
         {
             HashMap<Integer, Double> remainderMap = poly.getCoefficientMap1();
             HashMap<Integer, Double> secondMap = poly.getCoefficientMap2();
+            if(secondMap.isEmpty() || secondMap.getOrDefault(0, (double) 1) == 0)
+                return "Cannot divide by 0";
             HashMap <Integer, Double> resultingMap = new HashMap<>();
             int highestPowerRemainder = degreeOf(remainderMap);
             int highestPowerSecond = degreeOf(secondMap);
@@ -162,12 +164,11 @@ public class OperationClass {
             {
                 int degree = highestPowerRemainder - highestPowerSecond;
                 double coefficient;
-                //System.out.println(highestPowerRemainder + " " + highestPowerSecond + " and " + remainderMap.get(highestPowerRemainder) + " " + secondMap.get(highestPowerSecond));
                 if(secondMap.getOrDefault(highestPowerSecond, (double) 0) != 0)
                     coefficient = remainderMap.get(highestPowerRemainder) / secondMap.get(highestPowerSecond);
                 else
                     coefficient = 0;
-                resultingMap.put(degree, coefficient); //does not matter if coefficient is 0 because upper function solves everything.
+                resultingMap.put(degree, coefficient); //does not matter if coefficient is 0 because upper function solves this case as well.
 
                 for(HashMap.Entry<Integer, Double> entry: secondMap.entrySet())
                 {
@@ -178,7 +179,7 @@ public class OperationClass {
                     else
                         remainderMap.put(newDegree, - newCoefficient);
                 }
-                remainderMap.remove(highestPowerRemainder);//this action NEEDS to be done
+                remainderMap.remove(highestPowerRemainder);//this action is vital for correctness.
                 highestPowerRemainder = degreeOf(remainderMap);
             }
             String remainderMapString = displayFinalPolynomial(remainderMap);
@@ -192,7 +193,6 @@ public class OperationClass {
             HashMap<Integer, Double> resultingMap = new HashMap<>();
             for(HashMap.Entry <Integer, Double> entry : firstMap.entrySet())
             {
-                System.out.println(entry.getKey() +" "+ entry.getValue());
                 if(entry.getKey() != 0)
                 {
                     if(entry.getValue() != 0) {

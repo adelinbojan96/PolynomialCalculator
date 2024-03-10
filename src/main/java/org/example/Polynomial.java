@@ -16,13 +16,6 @@ public class Polynomial {
     public HashMap<Integer, Double> getCoefficientMap2() {
         return coefficientMap2;
     }
-    public String getPoly1() {
-        return poly1;
-    }
-
-    public String getPoly2() {
-        return poly2;
-    }
 
     public Polynomial(String poly1, String poly2, String operation) {
         this.poly1 = poly1;
@@ -40,8 +33,6 @@ public class Polynomial {
         int coefficient = 0;
         boolean isDegree = false;
         int sign = 1; // -1 if negative or 1 if positive
-        //ArrayList<Integer> degrees = new ArrayList<>();
-        //ArrayList<Integer> coefficients = new ArrayList<>();
         boolean skip = false;
         if (!poly.isEmpty() && poly.charAt(0) == '-') {
             sign = -1;
@@ -71,8 +62,6 @@ public class Polynomial {
                 addCoefficient(degree,coefficient * sign, coefficientMap);
                 prevDegree = degree;
                 isDegree = false;
-                //degrees.add(degree);
-                //coefficients.add(coefficient * sign);
                 coefficient = 0;
                 sign = (character == '+') ? 1 : -1;
             }
@@ -84,14 +73,6 @@ public class Polynomial {
                 degree = 0;
             addCoefficient(degree, coefficient * sign, coefficientMap);
         }
-    /*  TESTING STUFF
-        for (Integer value : degrees) {
-            System.out.println("Degree: " + value);
-        }
-        for (Integer integer : coefficients) {
-            System.out.println("Coefficient: " + integer);
-        }
-     */
     }
     protected void readPolynomials()
     {
@@ -102,7 +83,6 @@ public class Polynomial {
     public String solveOperationForPolynomial() {
         String finalPolynomial = "";
         readPolynomials();
-        System.out.println(poly1);
         switch (operation) {
             case "Addition" -> finalPolynomial = OperationClass.additionOfPolynomials(this);
             case "Subtraction" -> finalPolynomial = OperationClass.subtractionOfPolynomials(this);

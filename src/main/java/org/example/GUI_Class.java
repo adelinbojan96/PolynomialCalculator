@@ -1,8 +1,5 @@
 package org.example;
-
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Objects;
 
 public class GUI_Class extends JDialog {
@@ -30,5 +27,9 @@ public class GUI_Class extends JDialog {
         });
         setModal(true);
         setVisible(true);
+
+    }
+    public static void main(String[] args) {
+        new GUI_Class();
     }
 }
