@@ -13,6 +13,20 @@ public class DesignClass {
                 new EmptyBorder(5, 20, 5, 20)
         ));
     }
+    public void displaySecondPolynomial(JComboBox operationChooser, JTextArea secondPolynomialText, JLabel secondText)
+    {
+        operationChooser.addActionListener(e -> {
+            String selectedOperation = (String) operationChooser.getSelectedItem();
+            assert selectedOperation != null;
+            if (selectedOperation.equals("Differentiation") || selectedOperation.equals("Integration")) {
+                secondText.setVisible(false);
+                secondPolynomialText.setVisible(false);
+            } else {
+                secondText.setVisible(true);
+                secondPolynomialText.setVisible(true);
+            }
+        });
+    }
     public void customizeChooser(JComboBox operationChooser)
     {
         operationChooser.addItem("Addition");

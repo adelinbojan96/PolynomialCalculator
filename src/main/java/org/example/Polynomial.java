@@ -1,32 +1,28 @@
 package org.example;
 import java.util.HashMap;
-
 public class Polynomial {
+    public String getPolynomialString() {
+        return poly1;
+    }
+
     private final String poly1;
-    private final String poly2;
+    private HashMap<Integer, Double> coefficientMap1 = new HashMap<>();
 
-    private final String operation;
-    private final HashMap<Integer, Double> coefficientMap1;
-    private final HashMap<Integer, Double> coefficientMap2;
-
-    public HashMap<Integer, Double> getCoefficientMap1() {
+    public HashMap<Integer, Double> getCoefficientMap() {
         return coefficientMap1;
     }
-
-    public HashMap<Integer, Double> getCoefficientMap2() {
-        return coefficientMap2;
+    public void setCoefficientMap(HashMap<Integer, Double> coefficientMap1)
+    {
+        this.coefficientMap1 = coefficientMap1;
     }
 
-    public Polynomial(String poly1, String poly2, String operation) {
+    public Polynomial(String poly1) {
         this.poly1 = poly1;
-        this.poly2 = poly2;
-        coefficientMap1 = new HashMap<>();
-        coefficientMap2 = new HashMap<>();
-        this.operation = operation;
     }
     private void addCoefficient(int degree, double coefficient, HashMap<Integer, Double> coefficientMap) {
         coefficientMap.put(degree, coefficient);
     }
+
     private void storeInHashMaps(String poly, HashMap<Integer, Double> coefficientMap) {
         int degree = 0;
         int prevDegree = 0;
@@ -74,24 +70,9 @@ public class Polynomial {
             addCoefficient(degree, coefficient * sign, coefficientMap);
         }
     }
-    protected void readPolynomials()
+    protected void readPolynomial()
     {
         storeInHashMaps(this.poly1, coefficientMap1);
-        storeInHashMaps(this.poly2, coefficientMap2);
     }
 
-    public String solveOperationForPolynomial() {
-        String finalPolynomial = "";
-        readPolynomials();
-        switch (operation) {
-            case "Addition" -> finalPolynomial = OperationClass.additionOfPolynomials(this);
-            case "Subtraction" -> finalPolynomial = OperationClass.subtractionOfPolynomials(this);
-            case "Multiplication" -> finalPolynomial = OperationClass.multiplicationOfPolynomials(this);
-            case "Division" -> finalPolynomial = OperationClass.divisionOfPolynomials(this);
-            case "Differentiation" -> finalPolynomial = OperationClass.differentiationOfPolynomial(this);
-            case "Integration" -> finalPolynomial = OperationClass.integrationOfPolynomial(this);
-            default -> System.out.println("This did not work as expected");
-        }
-        return finalPolynomial;
-    }
 }

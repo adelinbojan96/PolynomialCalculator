@@ -16,14 +16,17 @@ public class GUI_Class extends JDialog {
         setSize(850, 460);
         setTitle("Enter the polynomials in order to perform certain operations");
         setContentPane(mainPanel);
-        DesignClass design = new DesignClass(); OperationClass operationClass = new OperationClass();
+        DesignClass design = new DesignClass();
         design.customizeButton(makeTheOperationButton);
         design.customizeChooser(operationChooser);
-        operationClass.displaySecondPolynomial(operationChooser, secondPolynomialText, secondText);
+        design.displaySecondPolynomial(operationChooser, secondPolynomialText, secondText);
         makeTheOperationButton.addActionListener(e -> {
             //perform solving
-            Polynomial poly = new Polynomial(firstPolynomialText.getText(), secondPolynomialText.getText(), Objects.requireNonNull(operationChooser.getSelectedItem()).toString());
-            finalText.setText(poly.solveOperationForPolynomial());
+            //Polynomial poly = new Polynomial(firstPolynomialText.getText(), secondPolynomialText.getText(), );
+            Polynomial poly1 = new Polynomial(firstPolynomialText.getText());
+            Polynomial poly2 = new Polynomial(secondPolynomialText.getText());
+            String resultedPolynomialString = OperationClass.solveOperationForPolynomials(poly1, poly2, Objects.requireNonNull(operationChooser.getSelectedItem()).toString());
+            finalText.setText(resultedPolynomialString);
         });
         setModal(true);
         setVisible(true);
