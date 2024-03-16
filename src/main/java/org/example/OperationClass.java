@@ -7,7 +7,7 @@ import java.util.HashMap;
 public class OperationClass {
     public static String solveOperationForPolynomials(Polynomial poly1, Polynomial poly2, String operation) {
         Polynomial finalPolynomial = null;
-        Polynomial[] polynomialsDivision = new Polynomial[2];
+        Polynomial[] polynomialsDivision = new Polynomial[3];
         poly1.readPolynomial();
         poly2.readPolynomial();
         switch (operation) {
@@ -25,12 +25,11 @@ public class OperationClass {
             else if(polynomialsDivision[1] == null)
                 return polynomialsDivision[0].getPolynomialString();
             else if(polynomialsDivision[0] != null)
-                return polynomialsDivision[0].getPolynomialString() + " +(" + polynomialsDivision[1].getPolynomialString() + ")/(" + poly2.getPolynomialString() + ")";
+                return polynomialsDivision[0].getPolynomialString() + " +(" + polynomialsDivision[1].getPolynomialString() + ")/(" + polynomialsDivision[2].getPolynomialString() + ")";
         }
         else if(operation.equals("Integration"))
-        {
             return finalPolynomial.getPolynomialString() + " +C";
-        }
+
         assert finalPolynomial != null;
         return finalPolynomial.getPolynomialString();
     }
@@ -72,7 +71,7 @@ public class OperationClass {
         }
         if (finalText.isEmpty())
             return "0";
-        else if (finalText.charAt(0) == ' ' && finalText.charAt(1) == '+')
+        else if (finalText.length() > 1 && finalText.charAt(0) == ' ' && finalText.charAt(1) == '+')
             return finalText.substring(2, finalText.length());
         else if (finalText.charAt(0) == ' ')
             return finalText.substring(1, finalText.length());
@@ -194,10 +193,11 @@ public class OperationClass {
         String remainderMapString = displayFinalPolynomial(remainderMap);
         if (remainderMap.isEmpty() || remainderMapString.equals("0"))
             return new Polynomial[]{createFinalPolynomialOfTypePolynomial(displayFinalPolynomial(resultingMap), resultingMap), null};
-        Polynomial finalSecondPolynomial = createFinalPolynomialOfTypePolynomial(remainderMapString, remainderMap);
-        //return displayFinalPolynomial(resultingMap) + " +(" + remainderMapString + ")/(" + displayFinalPolynomial(secondMap) + ")";
+
         Polynomial finalFirstPolynomial = createFinalPolynomialOfTypePolynomial(displayFinalPolynomial(resultingMap), resultingMap);
-        return new Polynomial[]{finalFirstPolynomial, finalSecondPolynomial};
+        Polynomial finalSecondPolynomial = createFinalPolynomialOfTypePolynomial(remainderMapString, remainderMap);
+        Polynomial finalThirdPolynomial = createFinalPolynomialOfTypePolynomial(displayFinalPolynomial(secondMap), secondMap);
+        return new Polynomial[]{finalFirstPolynomial, finalSecondPolynomial, finalThirdPolynomial};
     }
 
     public static Polynomial differentiationOfPolynomial(Polynomial poly1) {
@@ -207,8 +207,6 @@ public class OperationClass {
             if (entry.getKey() != 0) {
                 if (entry.getValue() != 0) {
                     resultingMap.put(entry.getKey() - 1, entry.getValue() * entry.getKey());
-                } else if (entry.getKey() > 0) {
-                    resultingMap.put(entry.getKey() - 1, Double.valueOf(entry.getKey()));
                 }
             }
         }

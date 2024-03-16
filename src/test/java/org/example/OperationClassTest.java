@@ -70,7 +70,7 @@ class OperationClassTest {
         Polynomial poly8 = new Polynomial("X -3");
         callRead(new Polynomial[]{poly1, poly2, poly3, poly4, poly5, poly6, poly7, poly8});
 
-        assertEquals("1 +(-2)/(X + 1)", OperationClass.solveOperationForPolynomials(poly1, poly2, "Division"));
+        assertEquals("1 +(-2)/(X +1)", OperationClass.solveOperationForPolynomials(poly1, poly2, "Division"));
         assertEquals("0", OperationClass.solveOperationForPolynomials(poly3, poly4, "Division"));
         assertEquals("Cannot divide by 0.", OperationClass.solveOperationForPolynomials(poly5, poly6, "Division"));
         assertEquals("4X^2 +19X +52 +(165)/(X -3)", OperationClass.solveOperationForPolynomials(poly7, poly8, "Division"));

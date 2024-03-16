@@ -1,6 +1,8 @@
 package org.example;
 import javax.swing.*;
+import java.util.HashMap;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GUI_Class extends JDialog {
     private JPanel mainPanel;
@@ -22,7 +24,6 @@ public class GUI_Class extends JDialog {
         design.displaySecondPolynomial(operationChooser, secondPolynomialText, secondText);
         makeTheOperationButton.addActionListener(e -> {
             //perform solving
-            //Polynomial poly = new Polynomial(firstPolynomialText.getText(), secondPolynomialText.getText(), );
             Polynomial poly1 = new Polynomial(firstPolynomialText.getText());
             Polynomial poly2 = new Polynomial(secondPolynomialText.getText());
             String resultedPolynomialString = OperationClass.solveOperationForPolynomials(poly1, poly2, Objects.requireNonNull(operationChooser.getSelectedItem()).toString());
@@ -34,5 +35,6 @@ public class GUI_Class extends JDialog {
     }
     public static void main(String[] args) {
         new GUI_Class();
+
     }
 }

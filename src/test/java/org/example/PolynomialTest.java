@@ -13,6 +13,7 @@ public class PolynomialTest {
         Polynomial poly4 = new Polynomial("3x^2 - 2x + 1");
         Polynomial poly5 = new Polynomial("-2x^3 + 5x^2 - x + 3");
         Polynomial poly6 = new Polynomial("x^2 - 2x + 1");
+        Polynomial poly7 = new Polynomial("0x^2 + 0");
 
         poly1.readPolynomial();
         poly2.readPolynomial();
@@ -20,6 +21,7 @@ public class PolynomialTest {
         poly4.readPolynomial();
         poly5.readPolynomial();
         poly6.readPolynomial();
+        poly7.readPolynomial();
 
         HashMap<Integer, Double> expectedMap1_first = new HashMap<>();
         expectedMap1_first.put(2, 3.00);
@@ -51,11 +53,16 @@ public class PolynomialTest {
         expectedMap3_second.put(1, -2.00);
         expectedMap3_second.put(0, 1.00);
 
+        HashMap<Integer, Double> expectedLastMap = new HashMap<>();
+        expectedLastMap.put(2, 0.00);
+        expectedLastMap.put(0, 0.00);
+
         assertEquals(expectedMap1_first, poly1.getCoefficientMap());
         assertEquals(expectedMap1_second, poly2.getCoefficientMap());
         assertEquals(expectedMap2_first, poly3.getCoefficientMap());
         assertEquals(expectedMap2_second, poly4.getCoefficientMap());
         assertEquals(expectedMap3_first, poly5.getCoefficientMap());
         assertEquals(expectedMap3_second, poly6.getCoefficientMap());
+        assertEquals(expectedLastMap, poly7.getCoefficientMap());
     }
 }

@@ -1,10 +1,12 @@
 package org.example;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.*;
+
 public class Polynomial {
     public String getPolynomialString() {
         return poly1;
     }
-
     private final String poly1;
     private HashMap<Integer, Double> coefficientMap1 = new HashMap<>();
 
@@ -22,52 +24,38 @@ public class Polynomial {
     private void addCoefficient(int degree, double coefficient, HashMap<Integer, Double> coefficientMap) {
         coefficientMap.put(degree, coefficient);
     }
+    public void storeInHashMaps(String poly, HashMap<Integer, Double> coefficientMap)
+    {
+        poly = poly.replaceAll("\\s", ""); //remove all spaces
+        Pattern pattern = Pattern.compile("([+-]?[^-+]+)");
+        Matcher matcher = pattern.matcher(poly);
+        while (matcher.find()) {
+            String term = matcher.group(1);
+            if (!term.isEmpty()) {
+                double coefficient;
+                int degree = 0;
+                if (term.contains("X") || term.contains("x")) {
+                    String[] parts = term.split("[xX]");
+                    if (parts.length > 0 && !parts[0].isEmpty())
+                    {
+                        if(!parts[0].equals("+") && !parts[0].equals("-"))
+                            coefficient = Double.parseDouble(parts[0]);
+                        else if(parts[0].equals("+"))
+                            coefficient = 1;
+                        else
+                            coefficient = -1;
+                    }
+                    else
+                        coefficient = 1;//in case x is removed and there is nothing left
+                    if (parts.length > 1 && parts[1].contains("^")) {
+                        degree = Integer.parseInt(parts[1].substring(parts[1].indexOf("^") + 1));
+                    } else
+                        degree = 1;
+                } else
+                    coefficient = Double.parseDouble(term);
 
-    private void storeInHashMaps(String poly, HashMap<Integer, Double> coefficientMap) {
-        int degree = 0;
-        int prevDegree = 0;
-        int coefficient = 0;
-        boolean isDegree = false;
-        int sign = 1; // -1 if negative or 1 if positive
-        boolean skip = false;
-        if (!poly.isEmpty() && poly.charAt(0) == '-') {
-            sign = -1;
-            skip = true;
-        }
-        for (char character : poly.toCharArray()) {
-            if(skip)
-            {
-                skip = false;//skips the first iteration if we have a negative polynomial
-                continue;
+                addCoefficient(degree, coefficient, coefficientMap);
             }
-            if (Character.isDigit(character) && !isDegree) { // if it is coefficient
-                int digit = Character.getNumericValue(character);
-                coefficient = coefficient * 10 + digit;
-            } else if (isDegree && Character.isDigit(character)) {
-                    int digit = Character.getNumericValue(character);
-                    degree = degree * 10 + digit;
-            } if (character == 'x' || character == 'X') {
-                degree = 0;
-                isDegree = true;
-                if (coefficient == 0) {
-                    coefficient = 1;
-                }
-            } if (character == '+' || character == '-') {
-                if(isDegree && degree == 0)
-                    degree = 1;
-                addCoefficient(degree,coefficient * sign, coefficientMap);
-                prevDegree = degree;
-                isDegree = false;
-                coefficient = 0;
-                sign = (character == '+') ? 1 : -1;
-            }
-        }
-        if (coefficient != 0) {
-            if(isDegree && degree == 0)
-                degree = 1;
-            if(prevDegree == degree)
-                degree = 0;
-            addCoefficient(degree, coefficient * sign, coefficientMap);
         }
     }
     protected void readPolynomial()
