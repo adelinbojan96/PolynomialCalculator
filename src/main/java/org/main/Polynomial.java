@@ -52,10 +52,7 @@ public class Polynomial {
                         degree = 1;
                 } else
                     coefficient = Double.parseDouble(term);
-
-                addCoefficient(degree, coefficient, coefficientMap);
-            }
-        }
+                addCoefficient(degree, coefficient, coefficientMap);}}
     }
     public void readPolynomial()
     {
