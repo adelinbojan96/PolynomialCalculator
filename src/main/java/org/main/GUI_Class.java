@@ -1,8 +1,9 @@
-package org.example;
+package org.main;
+import org.design.DesignClass;
+
 import javax.swing.*;
-import java.util.HashMap;
+import java.awt.*;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GUI_Class extends JDialog {
     private JPanel mainPanel;
@@ -12,16 +13,17 @@ public class GUI_Class extends JDialog {
     private JTextArea secondPolynomialText;
     private JTextArea finalText;
     private JLabel secondText;
+
     public GUI_Class()
     {
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         setSize(850, 460);
         setTitle("Enter the polynomials in order to perform certain operations");
         setContentPane(mainPanel);
-        DesignClass design = new DesignClass();
-        design.customizeButton(makeTheOperationButton);
-        design.customizeChooser(operationChooser);
-        design.displaySecondPolynomial(operationChooser, secondPolynomialText, secondText);
+        mainPanel.setBackground(Color.decode("#fdfa72"));
+        DesignClass.customizeButton(makeTheOperationButton);
+        DesignClass.customizeChooser(operationChooser);
+        DesignClass.displaySecondPolynomial(operationChooser, secondPolynomialText, secondText);
         makeTheOperationButton.addActionListener(e -> {
             //perform solving
             Polynomial poly1 = new Polynomial(firstPolynomialText.getText());

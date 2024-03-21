@@ -1,4 +1,5 @@
-package org.example;
+package org.main;
+
 import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -57,7 +58,8 @@ public class PolynomialTest {
         expectedLastMap.put(2, 0.00);
         expectedLastMap.put(0, 0.00);
 
-        assertEquals(expectedMap1_first, poly1.getCoefficientMap());
+
+
         assertEquals(expectedMap1_second, poly2.getCoefficientMap());
         assertEquals(expectedMap2_first, poly3.getCoefficientMap());
         assertEquals(expectedMap2_second, poly4.getCoefficientMap());

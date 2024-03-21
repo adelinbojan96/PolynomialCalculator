@@ -1,9 +1,9 @@
-package org.example;
+package org.main;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class OperationClassTest {
-    private void callRead(Polynomial []polynomials)
+    private void callRead(Polynomial[]polynomials)
     {
         for (Polynomial poly: polynomials) {
             poly.readPolynomial();

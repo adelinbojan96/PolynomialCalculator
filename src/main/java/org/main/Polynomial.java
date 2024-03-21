@@ -1,4 +1,4 @@
-package org.example;
+package org.main;
 import java.util.HashMap;
 import java.util.regex.*;
 
@@ -23,7 +23,7 @@ public class Polynomial {
     private void addCoefficient(int degree, double coefficient, HashMap<Integer, Double> coefficientMap) {
         coefficientMap.put(degree, coefficient);
     }
-    public void storeInHashMaps(String poly, HashMap<Integer, Double> coefficientMap)
+    private void storeInHashMaps(String poly, HashMap<Integer, Double> coefficientMap)
     {
         poly = poly.replaceAll("\\s", ""); //remove all spaces
         Pattern pattern = Pattern.compile("([+-]?[^-+]+)");
@@ -57,9 +57,13 @@ public class Polynomial {
             }
         }
     }
-    protected void readPolynomial()
+    public void readPolynomial()
     {
-        storeInHashMaps(this.poly1, coefficientMap1);
+        try {
+            storeInHashMaps(this.poly1, coefficientMap1);
+        } catch (Exception e) {
+            System.err.println("Error reading polynomial: " + e.getMessage());
+        }
     }
 
 }

@@ -1,4 +1,4 @@
-package org.example;
+package org.design;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
@@ -6,7 +6,7 @@ import java.awt.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class DesignClass {
-    public void customizeButton(JButton button)
+    public static void customizeButton(JButton button)
     {
         button.setBackground(Color.WHITE);
         button.setForeground(Color.BLACK);
@@ -15,7 +15,7 @@ public class DesignClass {
                 new EmptyBorder(5, 20, 5, 20)
         ));
     }
-    public void displaySecondPolynomial(JComboBox operationChooser, JTextArea secondPolynomialText, JLabel secondText)
+    public static void displaySecondPolynomial(JComboBox operationChooser, JTextArea secondPolynomialText, JLabel secondText)
     {
         operationChooser.addActionListener(e -> {
             String selectedOperation = (String) operationChooser.getSelectedItem();
@@ -29,7 +29,7 @@ public class DesignClass {
             }
         });
     }
-    public void customizeChooser(JComboBox operationChooser)
+    public static void customizeChooser(JComboBox operationChooser)
     {
         operationChooser.addItem("Addition");
         operationChooser.addItem("Subtraction");
@@ -43,4 +43,6 @@ public class DesignClass {
         operationChooser.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(Color.BLACK, 1),
                 BorderFactory.createEmptyBorder(3, 3, 3, 3)
-        ));}}
+        ));
+    }
+}
