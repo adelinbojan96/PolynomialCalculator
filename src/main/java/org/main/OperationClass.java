@@ -168,7 +168,7 @@ public class OperationClass {
         HashMap<Integer, Double> remainderMap = poly1.getCoefficientMap();
         HashMap<Integer, Double> secondMap = poly2.getCoefficientMap();
         if (secondMap.isEmpty() || secondMap.getOrDefault(0, (double) 1) == 0)
-            return new Polynomial[]{null, null};
+            return new Polynomial[]{null, null, null};
         HashMap<Integer, Double> resultingMap = new HashMap<>();
         int highestPowerRemainder = degreeOf(remainderMap);
         int highestPowerSecond = degreeOf(secondMap);
